@@ -19,6 +19,7 @@ myCrawler.maxConcurrency = 1;
 var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
     return !parsedURL.uriPath.match(/\.css$/i) &&
         !parsedURL.uriPath.match(/\.js$/i) &&
+        !parsedURL.uriPath.match(/\.pdf$/i) &&
         !parsedURL.uriPath.match(/\.jpg$/i) &&
         !parsedURL.uriPath.match(/\.jpeg$/i) &&
         !parsedURL.uriPath.match(/\.png$/i) &&
