@@ -1,0 +1,6 @@
+{
+	"name": "spider",
+	"main": "index.html",
+	"description": "crawl the internets",
+	"version": "0.1.0"
+}
