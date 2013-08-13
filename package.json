@@ -2,5 +2,8 @@
     "name": "spider",
     "main": "index.html",
     "description": "crawl the internets",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "dependencies": {
+        "simplecrawler": ">=0.2.9"
+    }
 }
