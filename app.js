@@ -2,13 +2,13 @@ var Crawler = require('simplecrawler');
 
 // Overwriting the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
-	var crawler = this;
-	if (typeof callback === "function") {
-		crawler._fetchConditions.push(callback);
-		return crawler._fetchConditions.length - 1;
-	} else {
-		throw new Error("Fetch Condition must be a function.");
-	}
+    var crawler = this;
+    if (typeof callback === "function") {
+        crawler._fetchConditions.push(callback);
+        return crawler._fetchConditions.length - 1;
+    } else {
+        throw new Error("Fetch Condition must be a function.");
+    }
 };
 
 var myCrawler = new Crawler("health.usf.edu", "/nursing");
@@ -18,12 +18,12 @@ myCrawler.maxConcurrency = 1;
 
 var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
     return !parsedURL.uriPath.match(/\.css$/i) &&
-    	!parsedURL.uriPath.match(/\.js$/i) &&
-    	!parsedURL.uriPath.match(/\.jpg$/i) &&
-    	!parsedURL.uriPath.match(/\.jpeg$/i) &&
-    	!parsedURL.uriPath.match(/\.png$/i) &&
-    	!parsedURL.uriPath.match(/\.gif$/i) &&
-    	!parsedURL.uriPath.match(/\.bmp$/i);
+        !parsedURL.uriPath.match(/\.js$/i) &&
+        !parsedURL.uriPath.match(/\.jpg$/i) &&
+        !parsedURL.uriPath.match(/\.jpeg$/i) &&
+        !parsedURL.uriPath.match(/\.png$/i) &&
+        !parsedURL.uriPath.match(/\.gif$/i) &&
+        !parsedURL.uriPath.match(/\.bmp$/i);
 });
 
 myCrawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
