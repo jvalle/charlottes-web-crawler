@@ -39,6 +39,8 @@ function initializeCrawler(options) {
         console.log("I just received %s (%d bytes)",queueItem.url,responseBuffer.length);
         console.log("It was a resource of type %s",response.headers['content-type']);
 
+        displayResult(queueItem.url, responseBuffer);
+
         // Do something with the data in responseBuffer
         var $ = cheerio.load(responseBuffer);
         console.log($('a').length);
@@ -47,13 +49,20 @@ function initializeCrawler(options) {
     myCrawler.start();
 }
 
+function displayResult(url, data) {
+    var result = url;
+    $('#results').append('<li>' + result + '</li>');
+}
+
 // Handle interaction with the user interface
+
+// TODO: these buttons don't exactly work more than once each...
 var $startButton = $('<button class="btn btn-success" type="button" id="crawl-begin">Start</button>'),
     $endButton = $('<button class="btn btn-danger" type="button" id="crawl-end">Stop</button>');
 
 $('#btn-main').append($startButton);
 
-$startButton.on('click', function () {
+$('#crawl-options').on('click', '#crawl-begin', function () {
     initializeCrawler({
         server: $('#crawl-url').val(),
         path: '/',
@@ -62,10 +71,10 @@ $startButton.on('click', function () {
     });
 
     $(this).replaceWith($endButton);
-});
+    console.log('starting');
 
-$endButton.on('click', function () {
+}).on('click', '#crawl-end', function () {
     myCrawler.stop();
-    console.log('stopping');
+    console.log('stopping at queue: ' + myCrawler.queue.length);
     $(this).replaceWith($startButton);
 });
