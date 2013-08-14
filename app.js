@@ -13,9 +13,13 @@ Crawler.prototype.addFetchCondition = function(callback) {
     }
 };
 
+// Initialize new crawler
+
+var myCrawler = new Crawler();
+
 function initializeCrawler(options) {
     // Create a crawler and set up some options
-    var myCrawler = new Crawler(options.server, options.path);
+    myCrawler.host = options.server;
     myCrawler.interval = options.interval;
     myCrawler.maxConcurrency = options.concurrency;
 
@@ -52,4 +56,9 @@ $('#crawl-begin').on('click', function () {
         interval: 2000,
         concurrency: 1
     });
+});
+
+$('#crawl-end').on('click', function () {
+    myCrawler.stop();
+    console.log('trying to end...')
 });
