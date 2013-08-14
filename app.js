@@ -14,7 +14,6 @@ Crawler.prototype.addFetchCondition = function(callback) {
 };
 
 // Initialize new crawler
-
 var myCrawler = new Crawler();
 
 function initializeCrawler(options) {
@@ -49,16 +48,24 @@ function initializeCrawler(options) {
 }
 
 // Handle interaction with the user interface
-$('#crawl-begin').on('click', function () {
+var $startButton = $('<button class="btn btn-success" type="button" id="crawl-begin">Start</button>'),
+    $endButton = $('<button class="btn btn-danger" type="button" id="crawl-end">Stop</button>');
+
+$('#btn-main').append($startButton);
+
+$startButton.on('click', function () {
     initializeCrawler({
         server: $('#crawl-url').val(),
         path: '/',
         interval: 2000,
         concurrency: 1
     });
+
+    $(this).replaceWith($endButton);
 });
 
-$('#crawl-end').on('click', function () {
+$endButton.on('click', function () {
     myCrawler.stop();
-    console.log('trying to end...')
+    console.log('stopping');
+    $(this).replaceWith($startButton);
 });
