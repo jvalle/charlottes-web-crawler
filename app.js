@@ -1,7 +1,8 @@
+// Load Node modules
 var Crawler = require('simplecrawler'),
     cheerio = require('cheerio');
 
-// Overwriting the addFetchCondition prototype - conflict in node-webkit
+// Overwrite the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
     var crawler = this;
     if (typeof callback === "function") {
@@ -12,11 +13,12 @@ Crawler.prototype.addFetchCondition = function(callback) {
     }
 };
 
+// Create a crawler and set up some options
 var myCrawler = new Crawler("health.usf.edu", "/nursing");
-
 myCrawler.interval = 2000;
 myCrawler.maxConcurrency = 1;
 
+// Ignore resources that we don't care about
 var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
     return !parsedURL.uriPath.match(/\.css$/i) &&
         !parsedURL.uriPath.match(/\.js$/i) &&
@@ -28,6 +30,7 @@ var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
         !parsedURL.uriPath.match(/\.bmp$/i);
 });
 
+// Every time a page is fetched, so something magical with it
 myCrawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
     console.log("I just received %s (%d bytes)",queueItem.url,responseBuffer.length);
     console.log("It was a resource of type %s",response.headers['content-type']);
