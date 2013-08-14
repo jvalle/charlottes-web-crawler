@@ -31,6 +31,10 @@ function initializeCrawler(options) {
             !parsedURL.uriPath.match(/\.jpeg$/i) &&
             !parsedURL.uriPath.match(/\.png$/i) &&
             !parsedURL.uriPath.match(/\.gif$/i) &&
+            !parsedURL.uriPath.match(/\.zip$/i) &&
+            !parsedURL.uriPath.match(/\.docx$/i) &&
+            !parsedURL.uriPath.match(/\.doc$/i) &&
+            !parsedURL.uriPath.match(/\.ppt$/i) &&
             !parsedURL.uriPath.match(/\.bmp$/i);
     });
 
