@@ -4,6 +4,7 @@
     "description": "crawl the internets",
     "version": "0.1.0",
     "dependencies": {
-        "simplecrawler": ">=0.2.9"
+        "simplecrawler": ">=0.2.9",
+        "cheerio": ">=0.12.1"
     }
 }

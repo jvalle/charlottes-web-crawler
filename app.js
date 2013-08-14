@@ -1,4 +1,5 @@
-var Crawler = require('simplecrawler');
+var Crawler = require('simplecrawler'),
+    cheerio = require('cheerio');
 
 // Overwriting the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
@@ -32,6 +33,8 @@ myCrawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
     console.log("It was a resource of type %s",response.headers['content-type']);
 
     // Do something with the data in responseBuffer
+    var $ = cheerio.load(responseBuffer);
+    console.log($('a').length);
 });
 
 myCrawler.start();
