@@ -36,19 +36,7 @@ function initializeCrawler(options) {
             !parsedURL.uriPath.match(/\.doc$/i) &&
             !parsedURL.uriPath.match(/\.ppt$/i) &&
             !parsedURL.uriPath.match(/\.bmp$/i);
-    });
-
-    // Every time a page is fetched, so something magical with it
-    myCrawler.on("fetchcomplete", function(queueItem, responseBuffer, response) {
-        console.log("I just received %s (%d bytes)",queueItem.url,responseBuffer.length);
-        console.log("It was a resource of type %s",response.headers['content-type']);
-
-        displayResult(queueItem, responseBuffer);
-
-        // Do something with the data in responseBuffer
-        var $ = cheerio.load(responseBuffer);
-        console.log($('a').length);
-    });
+    });    
 
     myCrawler.start();
 }
@@ -58,6 +46,32 @@ function displayResult(item, data) {
 
     $('#results').append('<li>' + result + '</li>');    
 }
+
+// Events 
+myCrawler.on('queueadd', function (item) {
+    $('#qlength').html(myCrawler.queue.length);
+});
+
+// Every time a page is fetched, so something magical with it
+myCrawler.on('fetchcomplete', function (queueItem, responseBuffer, response) {
+    console.log("I just received %s (%d bytes)",queueItem.url,responseBuffer.length);
+    console.log("It was a resource of type %s",response.headers['content-type']);
+
+    var downloadedItemCount = myCrawler.queue.countWithStatus('downloaded', function (err, count) { return count });
+
+    // Do something with the data in responseBuffer
+    //var $ = cheerio.load(responseBuffer);
+    //console.log($('a').length);
+
+    $('#fitem').html(myCrawler.queue.oldestUnfetchedIndex);
+    $('#ditems').html(downloadedItemCount);
+});
+
+myCrawler.on('fetchredirect', function (item, parsedURL, response) {
+    var redirectCount = myCrawler.queue.countWithStatus('redirected', function (err, count) { return count });
+
+    $('#ritems').html(redirectCount);
+});
 
 // Handle interaction with the user interface
 
