@@ -43,7 +43,7 @@ function initializeCrawler(options) {
         console.log("I just received %s (%d bytes)",queueItem.url,responseBuffer.length);
         console.log("It was a resource of type %s",response.headers['content-type']);
 
-        displayResult(queueItem.url, responseBuffer);
+        displayResult(queueItem, responseBuffer);
 
         // Do something with the data in responseBuffer
         var $ = cheerio.load(responseBuffer);
@@ -53,9 +53,10 @@ function initializeCrawler(options) {
     myCrawler.start();
 }
 
-function displayResult(url, data) {
-    var result = url;
-    $('#results').append('<li>' + result + '</li>');
+function displayResult(item, data) {
+    var result = item.url;
+
+    $('#results').append('<li>' + result + '</li>');    
 }
 
 // Handle interaction with the user interface
