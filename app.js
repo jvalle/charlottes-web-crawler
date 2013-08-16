@@ -17,7 +17,6 @@ Crawler.prototype.addFetchCondition = function(callback) {
 var myCrawler = new Crawler();
 
 // Functions
-
 function initializeCrawler(options) {
     // Create a crawler and set up some options
     myCrawler.host = options.server;
@@ -67,6 +66,8 @@ myCrawler.on('fetchcomplete', function (queueItem, responseBuffer, response) {
 
     $('#fitem').html(myCrawler.queue.oldestUnfetchedIndex);
     $('#ditems').html(downloadedItemCount);
+
+    $('#downloaded-list').append("<li>" + queueItem.url + "</li>");
 });
 
 myCrawler.on('fetchredirect', function (item, parsedURL, response) {
@@ -75,6 +76,10 @@ myCrawler.on('fetchredirect', function (item, parsedURL, response) {
     var redirectCount = myCrawler.queue.countWithStatus('redirected', function (err, count) { return count });
 
     $('#ritems').html(redirectCount);
+
+    console.log(parsedURL);
+
+    $('#redirected-list').append("<li>This: " + item.url + " redirected to: " + parsedURL.protocol + "://" + parsedURL.host + parsedURL.path +  "</li>");
 });
 
 // Handle interaction with the user interface
@@ -84,6 +89,7 @@ var $startButton = $('<button class="btn btn-success" type="button" id="crawl-be
     $endButton = $('<button class="btn btn-danger" type="button" id="crawl-end">Stop</button>');
 
 $('#btn-main').append($startButton);
+$('.nav.nav-tabs a:first').tab('show');
 
 $('#crawl-options').on('click', '#crawl-begin', function () {
     initializeCrawler({

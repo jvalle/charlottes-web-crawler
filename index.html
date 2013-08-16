@@ -23,9 +23,28 @@
                 <li><strong>Items Redirected: </strong><span id="ritems">0</span></li>
             </ul>
         </div>
-        <ul id="results">
-            
+
+        <ul class="nav nav-tabs">
+            <li><a href="#downloaded" data-toggle="tab">Downloaded</a></li>
+            <li><a href="#redirected" data-toggle="tab">Redirected</a></li>
+            <li><a href="#error" data-toggle="tab">Errors</a></li>
         </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="downloaded">
+                These are the things that have been fetched:
+                <ul id="downloaded-list"></ul>
+            </div>
+            <div class="tab-pane" id="redirected">
+                These are the things that have been redirected:
+                <ul id="redirected-list"></ul>
+            </div>
+            <div class="tab-pane" id="error">
+                These are the things that have been error
+                <ul id="error-list"></ul>
+            </div>            
+        </div>
+
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="app.js"></script>  
