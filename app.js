@@ -16,6 +16,8 @@ Crawler.prototype.addFetchCondition = function(callback) {
 // Initialize new crawler
 var myCrawler = new Crawler();
 
+// Functions
+
 function initializeCrawler(options) {
     // Create a crawler and set up some options
     myCrawler.host = options.server;
@@ -68,6 +70,8 @@ myCrawler.on('fetchcomplete', function (queueItem, responseBuffer, response) {
 });
 
 myCrawler.on('fetchredirect', function (item, parsedURL, response) {
+    // is this only for items in the queue? should we do something like 
+    // redirectcount++ whenever the even is fired? I guess we'll see once we start displaying results
     var redirectCount = myCrawler.queue.countWithStatus('redirected', function (err, count) { return count });
 
     $('#ritems').html(redirectCount);
