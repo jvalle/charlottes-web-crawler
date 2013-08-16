@@ -24,18 +24,18 @@ function initializeCrawler(options) {
 
     // Ignore resources that we don't care about
     var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
-        return !parsedURL.uriPath.match(/\.css$/i) &&
-            !parsedURL.uriPath.match(/\.js$/i) &&
-            !parsedURL.uriPath.match(/\.pdf$/i) &&
-            !parsedURL.uriPath.match(/\.jpg$/i) &&
-            !parsedURL.uriPath.match(/\.jpeg$/i) &&
-            !parsedURL.uriPath.match(/\.png$/i) &&
-            !parsedURL.uriPath.match(/\.gif$/i) &&
-            !parsedURL.uriPath.match(/\.zip$/i) &&
-            !parsedURL.uriPath.match(/\.docx$/i) &&
-            !parsedURL.uriPath.match(/\.doc$/i) &&
-            !parsedURL.uriPath.match(/\.ppt$/i) &&
-            !parsedURL.uriPath.match(/\.bmp$/i);
+        var url = parsedURL.uriPath,
+            i,
+            ignore = [
+                'css', 'js',
+                'jpg', 'jpeg', 'png', 'gif', 'bmp',
+                'pdf', 'doc', 'docx', 'ppt', 'pptx', 'zip'
+            ];
+
+        for (i = 0; i < ignore.length; i += 1) {
+            if (url.indexOf(ignore[i], url.length - ignore[i].length) !== -1) { return false }
+        }
+        return true;
     });    
 
     myCrawler.start();
