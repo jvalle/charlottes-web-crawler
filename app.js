@@ -23,6 +23,9 @@ function initializeCrawler(options) {
     myCrawler.host = options.server;
     myCrawler.interval = options.interval;
     myCrawler.maxConcurrency = options.concurrency;
+    myCrawler.initialPort = options.port;
+    myCrawler.initialPath = options.path;
+    myCrawler.initialProtocol = options.protocol;
 
     // Ignore resources that we don't care about
     var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
