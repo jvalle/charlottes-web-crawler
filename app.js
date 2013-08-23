@@ -1,6 +1,7 @@
 // Load Node modules
 var Crawler = require('simplecrawler'),
-    cheerio = require('cheerio');
+    cheerio = require('cheerio'),
+    util = require('./js/utils.js');
 
 // Overwrite the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
@@ -22,6 +23,9 @@ function initializeCrawler(options) {
     myCrawler.host = options.server;
     myCrawler.interval = options.interval;
     myCrawler.maxConcurrency = options.concurrency;
+    myCrawler.initialPort = options.port;
+    myCrawler.initialPath = options.path;
+    myCrawler.initialProtocol = options.protocol;
 
     // Ignore resources that we don't care about
     var conditionID = myCrawler.addFetchCondition(function(parsedURL) {
@@ -92,15 +96,28 @@ $('#btn-main').append($startButton);
 $('.nav.nav-tabs a:first').tab('show');
 
 $('#crawl-options').on('click', '#crawl-begin', function () {
-    initializeCrawler({
-        server: $('#crawl-url').val(),
-        path: '/',
-        interval: 2000,
-        concurrency: 1
-    });
+    var url = util.getUrlParts($('#crawl-url').val());
 
-    $(this).replaceWith($endButton);
-    console.log('starting');
+    if (url) {
+        initializeCrawler({
+            server: url.server,
+            path: url.path,
+            port: url.port,
+            protocol: url.protocol,
+            interval: 2000,
+            concurrency: 1
+        });
+
+        // remove any error messages and swap the start button with a stop button
+        $('#crawl-url').parent().removeClass('has-error')
+        $('#crawl-url-error').addClass('hide')
+        $(this).replaceWith($endButton);
+        console.log('starting');
+    } else {
+        // show an error for invalid URLs
+        $('#crawl-url').parent().addClass('has-error');
+        $('#crawl-url-error').removeClass('hide');
+    }
 
 }).on('click', '#crawl-end', function () {
     myCrawler.stop();
