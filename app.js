@@ -98,17 +98,20 @@ $('.nav.nav-tabs a:first').tab('show');
 $('#crawl-options').on('click', '#crawl-begin', function () {
     var url = util.getUrlParts($('#crawl-url').val());
 
-    initializeCrawler({
-        server: url.server,
-        path: url.path,
-        port: url.port,
-        protocol: url.protocol,
-        interval: 2000,
-        concurrency: 1
-    });
+    if (url) {
+        initializeCrawler({
+            server: url.server,
+            path: url.path,
+            port: url.port,
+            protocol: url.protocol,
+            interval: 2000,
+            concurrency: 1
+        });
 
-    $(this).replaceWith($endButton);
-    console.log('starting');
+        $(this).replaceWith($endButton);
+        console.log('starting');
+    }
+    // TODO: else show an error message
 
 }).on('click', '#crawl-end', function () {
     myCrawler.stop();

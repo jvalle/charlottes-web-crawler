@@ -25,5 +25,7 @@ module.exports.getUrlParts = function (baseUrl) {
 	}
 
 	url.server = baseUrl;
-	return url;
+
+	// return false if the URL is invalid (no "." indicating a TLD)
+	return url.server.indexOf('.') > 0 ? url : false;
 };
