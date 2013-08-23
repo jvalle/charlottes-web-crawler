@@ -108,10 +108,16 @@ $('#crawl-options').on('click', '#crawl-begin', function () {
             concurrency: 1
         });
 
+        // remove any error messages and swap the start button with a stop button
+        $('#crawl-url').parent().removeClass('has-error')
+        $('#crawl-url-error').addClass('hide')
         $(this).replaceWith($endButton);
         console.log('starting');
+    } else {
+        // show an error for invalid URLs
+        $('#crawl-url').parent().addClass('has-error');
+        $('#crawl-url-error').removeClass('hide');
     }
-    // TODO: else show an error message
 
 }).on('click', '#crawl-end', function () {
     myCrawler.stop();
