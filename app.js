@@ -1,6 +1,7 @@
 // Load Node modules
 var Crawler = require('simplecrawler'),
-    cheerio = require('cheerio');
+    cheerio = require('cheerio'),
+    util = require('js/utils.js');
 
 // Overwrite the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
@@ -92,9 +93,13 @@ $('#btn-main').append($startButton);
 $('.nav.nav-tabs a:first').tab('show');
 
 $('#crawl-options').on('click', '#crawl-begin', function () {
+    var url = util.getUrlParts($('#crawl-url').val());
+
     initializeCrawler({
-        server: $('#crawl-url').val(),
-        path: '/',
+        server: url.server,
+        path: url.path,
+        port: url.port,
+        protocol: url.protocol,
         interval: 2000,
         concurrency: 1
     });
