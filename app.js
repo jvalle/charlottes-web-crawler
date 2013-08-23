@@ -1,7 +1,7 @@
 // Load Node modules
 var Crawler = require('simplecrawler'),
     cheerio = require('cheerio'),
-    util = require('js/utils.js');
+    util = require('./js/utils.js');
 
 // Overwrite the addFetchCondition prototype - conflict in node-webkit
 Crawler.prototype.addFetchCondition = function(callback) {
